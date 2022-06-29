@@ -1,6 +1,6 @@
 process.env.NTBA_FIX_319 = 1;
 const fs = require('fs'); 
-const telйegramAPI = require('node-telegram-bot-api');
+const telegramAPI = require('node-telegram-bot-api');
 const token = '5595225109:AAF1Zr9lWFE7hCajnVqg-mhc8L530o8PwjY';
 const bot = new telegramAPI(token, { polling: true });
 
@@ -199,3 +199,6 @@ const server = http.createServer((request, response) => {
 
 server.listen(port, () => { console.log(`Server port ${port}`); });
 */
+
+
+// завести машину без ключей чтобы не заклинило руль
