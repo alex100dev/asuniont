@@ -6,11 +6,22 @@ const func = {
     var encoding;
     if (path.split('.')[1] == 'html') {
       encoding = 'utf8';
-    } 
-    return fs.readFileSync(path, {
+    }
+    if (path.split('.')[1] == 'css') {
+      encoding = 'utf8';
+    }
+    if (path.split('.')[1] == 'js') {
+      encoding = 'utf8';
+    }
+    if (path.split('.')[1] == 'ico') {
+      encoding = 'utf8';
+    }
+    /*return fs.readFileSync(path, {
       encoding: encoding, 
       flag: 'r'
     });
+    */
+    return fs.readFileSync(path);
   }
 };
 
@@ -22,6 +33,18 @@ const server = http.createServer((request, response) => {
     if (request.url == '/') {
       response.setHeader("Content-Type", "text/html");
       response.end(func.readFileSync(__dirname + '/dist/index.html'));
+    }
+    if (request.url == '/style.css') {
+      response.setHeader("Content-Type", "text/css");
+      response.end(func.readFileSync(__dirname + '/dist/style.css'));
+    }
+    if (request.url == '/script.js') {
+      response.setHeader("Content-Type", "text/javascript");
+      response.end(func.readFileSync(__dirname + '/dist/script.js'));
+    }
+    if (request.url == '/favicon.ico') {
+      response.setHeader('Content-Type' , 'image/ico');
+      response.end(func.readFileSync(__dirname + '/dist/favicon.ico'));
     }
     
   } 
