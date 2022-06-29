@@ -25,7 +25,7 @@ const func = {
   }
 };
 
-const HOST = 'localhost';
+//const HOST = 'localhost';
 const PORT = process.env.PORT || 5000;
 
 const server = http.createServer((request, response) => {
@@ -50,6 +50,11 @@ const server = http.createServer((request, response) => {
     
   } 
 });
+/*
 server.listen(PORT, HOST, () => {
   console.log(`Server on ${HOST}:${PORT}`);
+});
+*/
+server.listen(PORT, () => {
+  console.log(`Server on ${PORT}`);
 });
