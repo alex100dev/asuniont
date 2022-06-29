@@ -103,6 +103,28 @@ bot.on('callback_query', (query) => {
   } 
 });
 
+const users = [{
+  message_id: 121,
+  from: {
+    id: 1632569299,
+    is_bot: false,
+    first_name: 'Alexandr',
+    last_name: 'Astashov',
+    username: 'lifecruisetothesky',
+    language_code: 'ru'
+  },
+  chat: {
+    id: 1632569299,
+    first_name: 'Alexandr',
+    last_name: 'Astashov',
+    username: 'lifecruisetothesky',
+    type: 'private'
+  },
+  date: 1656475190,
+  text: '/start',
+  entities: [ { offset: 0, length: 6, type: 'bot_command' } ]
+}] 
+
 /* TelegramBot */ /*
 
 Kind: global class
