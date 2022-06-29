@@ -25,9 +25,10 @@ const func = {
   }
 };
 
-//const HOST = 'localhost';
+process.env.NTBA_FIX_319 = 1;
 const PORT = process.env.PORT || 5000;
 const HOST = process.env.HOST;
+const URL = process.env.CUSTOM_ENV_VARIABLE || 'https://astuniont.herokuapp.com/' ,
 
 /*
 const server = http.createServer((request, response) => {
@@ -58,11 +59,10 @@ server.listen(PORT, HOST, () => {
 });
 */
 
-process.env.NTBA_FIX_319 = 1;
 const telegramAPI = require('node-telegram-bot-api');
 const token = '5595225109:AAF1Zr9lWFE7hCajnVqg-mhc8L530o8PwjY';
 const bot = new telegramAPI(token, { webHook: { port: PORT, host: HOST } });
-bot.setWebHook('https://astuniont.herokuapp.com/');
+bot.setWebHook(URL + ':' + PORT + '/bot' + token);
 
 bot.on('message', (message) => {
   
