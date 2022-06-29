@@ -65,6 +65,7 @@ bot.on('message', (message) => {
     
     for (var i in user) {
       if (user[i].id == message.from.id) {
+        
         break;
       } else {
         if (i == user.length - 1) {
