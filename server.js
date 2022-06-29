@@ -1,6 +1,6 @@
 process.env.NTBA_FIX_319 = 1;
-const port = process.ENV.PORT;
-const host = process.ENV.HOST;
+const port = process.env.PORT;
+const host = process.env.HOST;
 const fs = require('fs');
 const date = new Date();
 const telegramAPI = require('node-telegram-bot-api');
