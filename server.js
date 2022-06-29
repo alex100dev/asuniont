@@ -63,15 +63,15 @@ bot.on('message', (message) => {
   
   if (message.text == '/start') {
     
-    user.forEach((e, i) => {
-      if (e.id == message.from.id) {
+    for (var i in user) {
+      if (user[i].id == message.from.id) {
         break;
       } else {
         if (i == user.length - 1) {
           user.push(message.from);
         }
       } 
-    });
+    };
     console.log(user);
     bot.sendMessage(message.chat.id, `Привет, <b>${message.chat.first_name}</b>!\n<b>Спасибо что установили наш бот!</b>\nГлавное меню - /start \nВыберите услугу:`, opts);
   } 
