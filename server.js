@@ -51,9 +51,9 @@ const opts = {
     inline_keyboard: [[]]
   }
 };
-service.forEach((e, i) => {
-  opts.reply_markup.inline_keyboard[i].push({ text: e.name, callback_data: e.id });
-});
+for (var i in service) {
+  opts.reply_markup.inline_keyboard[i].push({ text: service[i].name, callback_data: service[i].id });
+}
 
 bot.on('message', (message) => {
   if (message.text == '/start') {
@@ -73,10 +73,13 @@ bot.on('message', (message) => {
 bot.on('callback_query', (query) => {
   console.log(query);
   if (query.data == 2) {
-    order.push({ id: order.length, user_id: query.message.from.id, service_id: query.data, date: date.now() });
+      order.push({ id: order.length, user_id: query.message.from.id, service_id: query.data, date: date.now() });
     bot.sendContact(query.message.chat.id, '+77056355871', query.message.chat.first_name + ' Beeline');
     bot.sendContact(query.message.chat.id, '+77056355871', query.message.chat.first_name + ' Activ');
   }
+  else {
+    
+  } 
   console.log(order);
 });
 
