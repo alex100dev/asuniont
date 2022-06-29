@@ -102,8 +102,10 @@ bot.on('message', (message) => {
 
 bot.on('callback_query', (query) => {
   if (query.data == 0 || query.data == 1) {
+    setTimeout(() => {
+      bot.sendContact(query.message.chat.id, '+77056355871', query.message.chat.first_name + ' ' + query.message.chat.last_name);
+    }, 1000);
     bot.sendMessage(query.message.chat.id, 'Номер телефона специалиста:');
-    bot.sendContact(query.message.chat.id, '+77056355871', query.message.chat.first_name + ' ' + query.message.chat.last_name);
   } 
 });
 
