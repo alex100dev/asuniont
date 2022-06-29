@@ -32,7 +32,7 @@ const HOST = process.env.HOST;
 const URL = process.env.CUSTOM_ENV_VARIABLE || 'https://astuniont.herokuapp.com/' ,
 
 
-const server = http.createServer((request, response) => {
+server = http.createServer((request, response) => {
   console.log(request.method, request.url);
   if (request.method == 'GET') {
     if (request.url == '/') {
