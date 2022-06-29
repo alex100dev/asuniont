@@ -16,10 +16,23 @@ const order = [
 const service = [
   {
     id: 0,
-    name: 'Подключение к базе бота',
-    user_id: 1632569299,
+    name: 'Очередь к парихмахеру',
+    user_id: 16325692,
     time: null
-  }
+  },
+  {
+    id: 1,
+      name: 'Очередь на ногти',
+      user_id: 163256929,
+      time: null
+  }, 
+  { 
+    id: 2,
+      name: 'Подключение к базе бота',
+      user_id: 1632569299,
+      time: null
+  } 
+  
 ];
 const user = [
   {
@@ -44,27 +57,65 @@ service.forEach((e, i) => {
 
 bot.on('message', (message) => {
   if (message.text == '/start') {
-    
     for (var i in user) {
       if (user[i].id == message.from.id) {
         break;
-      } else {
+      } 
+      else {
         if (i == user.length - 1) {
           user.push(message.from);
         }
       } 
     };
-    bot.sendMessage(message.chat.id, `Привет, <b>${message.chat.first_name}</b>!\n<b>Спасибо что установили наш бот!</b>\nГлавное меню - /start \nВыберите услугу:`, opts);
+    bot.sendMessage(message.chat.id, `Привет, <b>${message.chat.first_name}</b>!\nГлавное меню - /start \nВыберите услугу:`, opts);
   } 
 });
 bot.on('callback_query', (query) => {
   console.log(query);
-  if (query.data == 0) {
-    order.push({ id: order.length, user_id: query.message.from, service_id: query.data, date: date.now() });
-    bot.sendContact(query.message.chat.id, '+77056355871', query.message.chat.first_name + ' ' + query.message.chat.last_name);
+  if (query.data == 2) {
+    order.push({ id: order.length, user_id: query.message.from.id, service_id: query.data, date: date.now() });
+    bot.sendContact(query.message.chat.id, '+77056355871', query.message.chat.first_name + ' Beeline');
+    bot.sendContact(query.message.chat.id, '+77056355871', query.message.chat.first_name + ' Activ');
   }
   console.log(order);
 });
+
+/*  {
+    id: '7011831750756888275',
+    from: {
+      id: 1632569299,
+      is_bot: false,
+      first_name: 'Alexandr',
+      last_name: 'Astashov',
+      username: 'lifecruisetothesky',
+      language_code: 'ru'
+    },
+    message: {
+      message_id: 173,
+      from: {
+        id: 5595225109,
+        is_bot: true,
+        first_name: 'KushokyBot',
+        username: 'KushokyBot'
+      },
+      chat: {
+        id: 1632569299,
+        first_name: 'Alexandr',
+        last_name: 'Astashov',
+        username: 'lifecruisetothesky',
+        type: 'private'
+      },
+      date: 1656532562,
+      text: 'Привет, Alexandr!\n' +
+        'Спасибо что установили наш бот!\n' +
+        'Главное меню - /start \n' +
+        'Выберите услугу:',
+      entities: [ [Object], [Object], [Object] ],
+      reply_markup: { inline_keyboard: [Array] }
+    },
+    chat_instance: '-6725942240407492736',
+    data: '0'
+  } */
 
 /* TelegramBot */ /*
 
