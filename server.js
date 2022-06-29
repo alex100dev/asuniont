@@ -1,5 +1,6 @@
 const http = require('http');
 const fs = require('fs');
+telegramAPI = require('node-telegram-bot-api');
 
 const func = {
   readFileSync: function(path) {
@@ -59,7 +60,6 @@ server.listen(PORT, HOST, () => {
 });
 */
 
-var telegramAPI = require('node-telegram-bot-api');
 const token = '5595225109:AAF1Zr9lWFE7hCajnVqg-mhc8L530o8PwjY';
 const bot = new telegramAPI(token, { webHook: { port: PORT, host: HOST } });
 bot.setWebHook(URL + ':' + PORT + '/bot' + token);
