@@ -63,6 +63,8 @@ const bot = new telegramAPI(token, { polling: true });
 
 bot.on('message', (message) => {
   
+  console.log(message);
+  
   // если чата нет в базе сохранить чат и данные пользователя в базе - msg.chat 
   
   //bot.sendPhoto(msg.chat.id, 'url', { caption: 'text' });
@@ -95,6 +97,7 @@ bot.on('message', (message) => {
 });
 
 bot.on('callback_query', (query) => {
+  console.log(query);
   if (query.data == 0 || query.data == 1) {
     bot.sendContact(query.message.chat.id, '+77056355871', query.message.chat.first_name + ' ' + query.message.chat.last_name);
   } 
