@@ -61,9 +61,11 @@ server.listen(PORT, HOST, () => {
 */
 
 token = '5595225109:AAF1Zr9lWFE7hCajnVqg-mhc8L530o8PwjY';
+bot = new telegramAPI(token, { polling: true });
+/*
 bot = new telegramAPI(token, { webHook: { port: PORT, host: HOST } });
 bot.setWebHook(URL + ':' + PORT + '/bot' + token);
-
+*/
 bot.on('message', (message) => {
   
   // если чата нет в базе сохранить чат и данные пользователя в базе - msg.chat 
