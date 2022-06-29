@@ -45,7 +45,7 @@ const server = http.createServer((request, response) => {
     }
     if (request.url == '/favicon.ico') {
       response.setHeader('Content-Type' , 'image/ico');
-      response.end(func.readFileSync(__dirname + '/dist/favicon.ico'));
+      response.end(func.readFileSync(__dirname + '/dist/favicon.png'));
     }
     
   } 
