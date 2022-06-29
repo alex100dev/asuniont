@@ -1,61 +1,7 @@
+process.env.NTBA_FIX_319 = 1;
 // Node object
 const http = require('http');
 const fs = require('fs');
-// Mine object
-const func = {
-  readFileSync: function(path) {
-    var encoding;
-    if (path.split('.')[1] == 'html') {
-      encoding = 'utf8';
-    }
-    if (path.split('.')[1] == 'css') {
-      encoding = 'utf8';
-    }
-    if (path.split('.')[1] == 'js') {
-      encoding = 'utf8';
-    }
-    if (path.split('.')[1] == 'ico') {
-      encoding = 'utf8';
-    }
-    /*return fs.readFileSync(path, {
-      encoding: encoding, 
-      flag: 'r'
-    });
-    */
-    return fs.readFileSync(path);
-  }
-};
-
-process.env.NTBA_FIX_319 = 1;
-
-const port = process.env.PORT || 5000;
-const host = process.env.HOST;
-
-const server = http.createServer((request, response) => {
-  console.log(request.method, request.url);
-  if (request.method == 'GET') {
-    if (request.url == '/') {
-      response.setHeader("Content-Type", "text/html");
-      response.end(func.readFileSync(__dirname + '/dist/index.html'));
-    }
-    if (request.url == '/style.css') {
-      response.setHeader("Content-Type", "text/css");
-      response.end(func.readFileSync(__dirname + '/dist/style.css'));
-    }
-    if (request.url == '/script.js') {
-      response.setHeader("Content-Type", "text/javascript");
-      response.end(func.readFileSync(__dirname + '/dist/script.js'));
-    }
-    if (request.url == '/favicon.ico') {
-      response.setHeader('Content-Type' , 'image/ico');
-      response.end(func.readFileSync(__dirname + '/dist/favicon.png'));
-    }
-    
-  } 
-});
-
-server.listen(port, () => { console.log(`Server port ${port}`); });
-
 // TelegramBot object
 const telegramAPI = require('node-telegram-bot-api');
 const token = '5595225109:AAF1Zr9lWFE7hCajnVqg-mhc8L530o8PwjY';
@@ -95,14 +41,12 @@ bot.on('message', (message) => {
   };
   bot.sendMessage(message.chat.id, `Привет, <b>${message.chat.first_name}</b>!\n<b>Спасибо что установили наш бот!</b>\nВыберите требуемую услугу и получите номер телефона специалиста:`, opts);
 });
-
 bot.on('callback_query', (query) => {
   console.log(query);
   if (query.data == 0 || query.data == 1) {
     bot.sendContact(query.message.chat.id, '+77056355871', query.message.chat.first_name + ' ' + query.message.chat.last_name);
   } 
 });
-
 const users = [{
   message_id: 121,
   from: {
@@ -123,8 +67,7 @@ const users = [{
   date: 1656475190,
   text: '/start',
   entities: [ { offset: 0, length: 6, type: 'bot_command' } ]
-}] 
-
+}];
 /* TelegramBot */ /*
 
 Kind: global class
@@ -211,5 +154,58 @@ instance
 static
   .errors: Object
   .messageTypes: Array. < String >
-  .Promise */
+  .Promise 
+*/
 
+// Mine object
+const func = {
+  readFileSync: function(path) {
+    var encoding;
+    if (path.split('.')[1] == 'html') {
+      encoding = 'utf8';
+    }
+    if (path.split('.')[1] == 'css') {
+      encoding = 'utf8';
+    }
+    if (path.split('.')[1] == 'js') {
+      encoding = 'utf8';
+    }
+    if (path.split('.')[1] == 'ico') {
+      encoding = 'utf8';
+    }
+    /*return fs.readFileSync(path, {
+      encoding: encoding, 
+      flag: 'r'
+    });
+    */
+    return fs.readFileSync(path);
+  }
+};
+
+const port = process.env.PORT || 5000;
+const host = process.env.HOST;
+
+const server = http.createServer((request, response) => {
+  console.log(request.method, request.url);
+  if (request.method == 'GET') {
+    if (request.url == '/') {
+      response.setHeader("Content-Type", "text/html");
+      response.end(func.readFileSync(__dirname + '/dist/index.html'));
+    }
+    if (request.url == '/style.css') {
+      response.setHeader("Content-Type", "text/css");
+      response.end(func.readFileSync(__dirname + '/dist/style.css'));
+    }
+    if (request.url == '/script.js') {
+      response.setHeader("Content-Type", "text/javascript");
+      response.end(func.readFileSync(__dirname + '/dist/script.js'));
+    }
+    if (request.url == '/favicon.ico') {
+      response.setHeader('Content-Type' , 'image/ico');
+      response.end(func.readFileSync(__dirname + '/dist/favicon.png'));
+    }
+    
+  } 
+});
+
+server.listen(port, () => { console.log(`Server port ${port}`); });
