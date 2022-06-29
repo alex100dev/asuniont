@@ -12,7 +12,24 @@ const order = [
     date: ''
   }
 ];
-
+const service = [
+  {
+    id: 0,
+    name: 'Подключение к базе бота',
+    user_id: 1632569299,
+    time: null
+  }
+];
+const user = [
+  {
+    id: 1632569299,
+    is_bot: false,
+    first_name: 'Alexandr',
+    last_name: 'Astashov',
+    username: 'lifecruisetothesky',
+    language_code: 'ru'
+  }
+];
 
 bot.on('message', (message) => {
   // если чата нет в базе сохранить чат и данные пользователя в базе - msg.chat 
@@ -37,21 +54,18 @@ bot.on('message', (message) => {
   const opts = {
     parse_mode: 'HTML', 
     reply_markup: {
-      inline_keyboard: [] 
+      inline_keyboard: [[]]
     } 
   };
   
-  const service = [
-    {
-      id: 0,
-      name: 'Подключение к базе бота',
-      time: ''
-    }
-  ];
-  service.forEach((e, i) => {
-    console.log(e, i);
-  });
-  bot.sendMessage(message.chat.id, `Привет, <b>${message.chat.first_name}</b>!\n<b>Спасибо что установили наш бот!</b>\nВыберите требуемую услугу и получите номер телефона специалиста:`, opts);
+  if (message.text == '/start') {
+  
+    service.forEach((e, i) => {
+      console.log(e, i);
+      opts.reply_markup.inline_keyboard[i].push({ text: e.name, callback_data: e.id });
+    });
+    bot.sendMessage(message.chat.id, `Привет, <b>${message.chat.first_name}</b>!\n<b>Спасибо что установили наш бот!</b>\nГлавное меню - /start \nВыберите услугу:`, opts);
+  } 
 });
 bot.on('callback_query', (query) => {
   if (query.data == 0 || query.data == 1) {
@@ -59,16 +73,6 @@ bot.on('callback_query', (query) => {
     // bot.sendContact(query.message.chat.id, '+77056355871', query.message.chat.first_name + ' ' + query.message.chat.last_name);
   } 
 });
-const user = [
-  {
-    id: 1632569299,
-    is_bot: false,
-    first_name: 'Alexandr',
-    last_name: 'Astashov',
-    username: 'lifecruisetothesky',
-    language_code: 'ru'
-  }
-];
 
 /* TelegramBot */ /*
 
