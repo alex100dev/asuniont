@@ -48,12 +48,12 @@ const user = [
 const opts = {
   parse_mode: 'HTML',
   reply_markup: {
-    inline_keyboard: [[]]
+    inline_keyboard: []
   }
 };
 for (var i in service) {
-  opts.reply_markup.inline_keyboard[i].push({ text: service[i].name, callback_data: service[i].id });
-}
+  opts.reply_markup.inline_keyboard.push([{ text: service[i].name, callback_data: service[i].id }]);
+}  
 
 bot.on('message', (message) => {
   if (message.text == '/start') {
