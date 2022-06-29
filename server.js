@@ -56,8 +56,8 @@ const server = http.createServer((request, response) => {
   } 
 });
 
-server.listen(PORT, () => {
-  console.log(`Server port ${PORT}`);
+server.listen(port, () => {
+  console.log(`Server port ${port}`);
 });
 
 const token = '5595225109:AAF1Zr9lWFE7hCajnVqg-mhc8L530o8PwjY';
