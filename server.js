@@ -78,12 +78,12 @@ bot.on('message', (message) => {
 bot.on('callback_query', (query) => {
   console.log(query);
   if (query.data == 2) {
-      order.push({ id: order.length, user_id: query.message.from.id, service_id: query.data, date: new Date().toISOString() });
+      order.push({ id: order.length, user_id: query.message.chat.id, service_id: query.data, date: new Date().toISOString() });
       for (var i in service) {
       if (service[i].id == query.data) {
         bot.sendContact(query.message.chat.id, '+77751906501', 'Activ ' + service[i].name);
         bot.sendContact(query.message.chat.id, '+77056355871', 'Beeline' + service[i].name);
-        bot.sendMessage(service[i].user_id, `Новый заказ:\n${query.message.from.first_name} ${query.message.from.last_name}\n${service[i].name} - ${new Date().toISOString()}`);
+        bot.sendMessage(service[i].user_id, `Новый заказ:\n${query.message.chat.first_name} ${query.message.chat.last_name}\n${service[i].name} - ${new Date().toISOString()}`);
       }
     }
   }
