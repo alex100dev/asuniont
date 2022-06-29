@@ -1,6 +1,8 @@
 {
   "run": {
-    "type": "task",
-    "task": "npm/start"
+    "type": "file",
+    "task": "npm/start",
+    "file": "dist/index.html",
+    "ignoreCurrent": true
   }
 }
