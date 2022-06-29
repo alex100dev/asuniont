@@ -1,9 +1,12 @@
 process.env.NTBA_FIX_319 = 1;
+const port = process.ENV.PORT;
+const host = process.ENV.HOST;
 const fs = require('fs');
 const date = new Date();
 const telegramAPI = require('node-telegram-bot-api');
 const token = '5595225109:AAF1Zr9lWFE7hCajnVqg-mhc8L530o8PwjY';
-const bot = new telegramAPI(token, { polling: true });
+const bot = new telegramAPI(token, { webHook: { port: port, host: host } });
+
 
 const order = [
   {
@@ -41,6 +44,7 @@ const user = [
     first_name: 'Alexandr',
     last_name: 'Astashov',
     username: 'lifecruisetothesky',
+    mobile: '+77751906501',
     language_code: 'ru'
   }
 ];
@@ -55,6 +59,7 @@ for (var i in service) {
   opts.reply_markup.inline_keyboard.push([{ text: service[i].name, callback_data: service[i].id }]);
 }  
 
+bot.setWebHook('https://astuniont.herokuapp.com/' + token);
 bot.on('message', (message) => {
   if (message.text == '/start') {
     for (var i in user) {
@@ -67,7 +72,7 @@ bot.on('message', (message) => {
         }
       } 
     };
-    bot.sendMessage(message.chat.id, `Привет, <b>${message.chat.first_name}</b>!\nГлавное меню - /start \nВыберите услугу:`, opts);
+    bot.sendMessage(message.chat.id, `Привет, <b>${message.chat.first_name}</b>!\nГлавное меню - /start\nВыберите услугу:`, opts);
   } 
 });
 bot.on('callback_query', (query) => {
@@ -83,7 +88,7 @@ bot.on('callback_query', (query) => {
   console.log(order);
 });
 
-/*  {
+/*  {+1
     id: '7011831750756888275',
     from: {
       id: 1632569299,
@@ -260,3 +265,4 @@ server.listen(port, () => { console.log(`Server port ${port}`); });
 
 
 // завести машину без ключей чтобы не заклинило руль
+// сделать заборы маленький б Вали и покрасить оба калиткой
