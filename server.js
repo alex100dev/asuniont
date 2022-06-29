@@ -27,6 +27,7 @@ const func = {
 
 //const HOST = 'localhost';
 const PORT = process.env.PORT || 5000;
+const HOST = process.env.HOST;
 
 const server = http.createServer((request, response) => {
   console.log(request.method, request.url);
@@ -63,7 +64,8 @@ server.listen(PORT, () => {
 
 process.env.NTBA_FIX_319 = 1;
 const telegramAPI = require('node-telegram-bot-api');
-const bot = new telegramAPI('5595225109:AAF1Zr9lWFE7hCajnVqg-mhc8L530o8PwjY', { polling: true });
+const token = '5595225109:AAF1Zr9lWFE7hCajnVqg-mhc8L530o8PwjY';
+const bot = new telegramAPI(token, { webHook: { port: PORT, host: HOST } });
 
 bot.on('message', (message) => {
   
