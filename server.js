@@ -25,15 +25,15 @@ const service = [
   },
   {
     id: 1,
-      name: 'Очередь на ногти',
-      user_id: 163256929,
-      time: null
+    name: 'Очередь на ногти',
+    user_id: 163256929,
+    time: null
   }, 
   { 
     id: 2,
-      name: 'Подключение к базе бота',
-      user_id: 1632569299,
-      time: null
+    name: 'Подключение к базе бота',
+    user_id: 1632569299,
+    time: null
   } 
   
 ];
@@ -77,9 +77,14 @@ bot.on('message', (message) => {
 });
 bot.on('callback_query', (query) => {
   if (query.data == 2) {
-      order.push({ id: order.length, user_id: query.message.from.id, service_id: query.data, date: new Date() });
-    bot.sendContact(query.message.chat.id, '+77056355871', query.message.chat.first_name + ' Beeline');
-    bot.sendContact(query.message.chat.id, '+77056355871', query.message.chat.first_name + ' Activ');
+      order.push({ id: order.length, user_id: query.message.from.id, service_id: query.data, date: new Date().toISOString() });
+      for (var i in service) {
+      if (service[i].id == query.data) {
+        bot.sendContact(query.message.chat.id, '+77751906501', service[i].name + ' Activ');
+        bot.sendContact(query.message.chat.id, '+77056355871', service[i].name + ' Beeline');
+        bot.sendMessage(service[i].user_id, `Новый заказ:\n${query.message.from.first_name} ${query.message.from.last_name}\n${service[i].name} - ${new Date().toISOString()}`);
+      }
+    }
   }
   else {
     
