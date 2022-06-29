@@ -60,8 +60,8 @@ server.listen(PORT, HOST, () => {
 });
 */
 
-const token = '5595225109:AAF1Zr9lWFE7hCajnVqg-mhc8L530o8PwjY';
-const bot = new telegramAPI(token, { webHook: { port: PORT, host: HOST } });
+token = '5595225109:AAF1Zr9lWFE7hCajnVqg-mhc8L530o8PwjY';
+bot = new telegramAPI(token, { webHook: { port: PORT, host: HOST } });
 bot.setWebHook(URL + ':' + PORT + '/bot' + token);
 
 bot.on('message', (message) => {
