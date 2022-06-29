@@ -31,7 +31,7 @@ const PORT = process.env.PORT || 5000;
 const HOST = process.env.HOST;
 const URL = process.env.CUSTOM_ENV_VARIABLE || 'https://astuniont.herokuapp.com/' ,
 
-/*
+
 const server = http.createServer((request, response) => {
   console.log(request.method, request.url);
   if (request.method == 'GET') {
@@ -58,7 +58,6 @@ const server = http.createServer((request, response) => {
 server.listen(PORT, HOST, () => {
   console.log(`Server on ${HOST}:${PORT}`);
 });
-*/
 
 token = '5595225109:AAF1Zr9lWFE7hCajnVqg-mhc8L530o8PwjY';
 bot = new telegramAPI(token, { polling: true });
