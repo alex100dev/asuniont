@@ -1,0 +1,24 @@
+{
+  "name": "asuniont",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1", 
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alex100dev/asuniont.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/alex100dev/asuniont/issues"
+  },
+  "homepage": "https://github.com/alex100dev/asuniont#readme",
+  "dependencies": {
+    "node-telegram-bot-api": "^0.58.0"
+  },
+  "devDependencies": {}
+}
