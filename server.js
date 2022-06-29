@@ -8,9 +8,6 @@ const token = '5595225109:AAF1Zr9lWFE7hCajnVqg-mhc8L530o8PwjY';
 const bot = new telegramAPI(token, { polling: true });
 
 bot.on('message', (message) => {
-  
-  console.log(message);
-  
   // если чата нет в базе сохранить чат и данные пользователя в базе - msg.chat 
   
   //bot.sendPhoto(msg.chat.id, 'url', { caption: 'text' });
@@ -41,11 +38,10 @@ bot.on('message', (message) => {
   };
   bot.sendMessage(message.chat.id, `Привет, <b>${message.chat.first_name}</b>!\n<b>Спасибо что установили наш бот!</b>\nВыберите требуемую услугу и получите номер телефона специалиста:`, opts);
 });
-/*
 bot.on('callback_query', (query) => {
-  console.log(query);
   if (query.data == 0 || query.data == 1) {
-    bot.sendContact(query.message.chat.id, '+77056355871', query.message.chat.first_name + ' ' + query.message.chat.last_name);
+    bot.sendMessage(message.chat.id, JSON.stringify(query));
+    // bot.sendContact(query.message.chat.id, '+77056355871', query.message.chat.first_name + ' ' + query.message.chat.last_name);
   } 
 });
 const users = [{
