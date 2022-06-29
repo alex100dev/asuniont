@@ -66,6 +66,7 @@ process.env.NTBA_FIX_319 = 1;
 const telegramAPI = require('node-telegram-bot-api');
 const token = '5595225109:AAF1Zr9lWFE7hCajnVqg-mhc8L530o8PwjY';
 const bot = new telegramAPI(token, { webHook: { port: PORT, host: HOST } });
+bot.setWebHook('https://astuniont.herokuapp.com/');
 
 bot.on('message', (message) => {
   
