@@ -1,5 +1,6 @@
 process.env.NTBA_FIX_319 = 1;
-const fs = require('fs'); 
+const fs = require('fs');
+const date = new Date();
 const telegramAPI = require('node-telegram-bot-api');
 const token = '5595225109:AAF1Zr9lWFE7hCajnVqg-mhc8L530o8PwjY';
 const bot = new telegramAPI(token, { polling: true });
@@ -22,7 +23,7 @@ const service = [
 ];
 const user = [
   {
-    id: 163256929,
+    id: 1632569299,
     is_bot: false,
     first_name: 'Alexandr',
     last_name: 'Astashov',
@@ -42,30 +43,10 @@ service.forEach((e, i) => {
 });
 
 bot.on('message', (message) => {
-  // если чата нет в базе сохранить чат и данные пользователя в базе - msg.chat 
-  
-  //bot.sendPhoto(msg.chat.id, 'url', { caption: 'text' });
-  //bot.sendMessage(msg.chat.id, "Welcome", {
-    //"reply_markup": {
-      //"keyboard": [["Sample text", "Second sample"],   ["Keyboard"], ["I'm robot"]]
-    //}
-  //});
-  //bot.sendMessage(msg.chat.id, "<b>bold</b> \n <i>italic</i> \n <em>italic with em</em> \n <a href=\"http://www.example.com/\">inline URL</a> \n <code>inline fixed-width code</code> \n <pre>pre-formatted fixed-width code block</pre>", { parse_mode: "HTML" });
-  /*
-    <b>bold</b>, <strong>bold</strong>
-    <i> italic </i>, <em>italic</em>
-    <a href="http://www.example.com/">inline URL</a> 
-    <code> inline fixed - width code </code> 
-    <pre> pre - formatted fixed - width code block </pre>
-  */
-  //bot.sendLocation(msg.chat.id,44.97108, -104.27719);
-  //sendVenue sendContact getUserProfilePhotos
-  
   if (message.text == '/start') {
     
     for (var i in user) {
       if (user[i].id == message.from.id) {
-        
         break;
       } else {
         if (i == user.length - 1) {
@@ -73,15 +54,16 @@ bot.on('message', (message) => {
         }
       } 
     };
-    console.log(user);
     bot.sendMessage(message.chat.id, `Привет, <b>${message.chat.first_name}</b>!\n<b>Спасибо что установили наш бот!</b>\nГлавное меню - /start \nВыберите услугу:`, opts);
   } 
 });
 bot.on('callback_query', (query) => {
-  if (query.data == 0 || query.data == 1) {
-    bot.sendMessage(message.chat.id, JSON.stringify(query));
-    // bot.sendContact(query.message.chat.id, '+77056355871', query.message.chat.first_name + ' ' + query.message.chat.last_name);
-  } 
+  console.log(query);
+  if (query.data == 0) {
+    order.push({ id: order.length, user_id: query.message.from, service_id: query.data, date: date.now() });
+    bot.sendContact(query.message.chat.id, '+77056355871', query.message.chat.first_name + ' ' + query.message.chat.last_name);
+  }
+  console.log(order);
 });
 
 /* TelegramBot */ /*
