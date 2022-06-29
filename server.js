@@ -1,9 +1,6 @@
 process.env.NTBA_FIX_319 = 1;
-// Node object
-const http = require('http');
-const fs = require('fs');
-// TelegramBot object
-const telegramAPI = require('node-telegram-bot-api');
+const fs = require('fs'); 
+const telйegramAPI = require('node-telegram-bot-api');
 const token = '5595225109:AAF1Zr9lWFE7hCajnVqg-mhc8L530o8PwjY';
 const bot = new telegramAPI(token, { polling: true });
 
