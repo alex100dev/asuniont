@@ -29,6 +29,7 @@ const func = {
 const PORT = process.env.PORT || 5000;
 const HOST = process.env.HOST;
 
+/*
 const server = http.createServer((request, response) => {
   console.log(request.method, request.url);
   if (request.method == 'GET') {
@@ -51,16 +52,11 @@ const server = http.createServer((request, response) => {
     
   } 
 });
-/*
+
 server.listen(PORT, HOST, () => {
   console.log(`Server on ${HOST}:${PORT}`);
 });
 */
-server.listen(PORT, () => {
-  console.log(`Server on ${PORT}`);
-});
-
-
 
 process.env.NTBA_FIX_319 = 1;
 const telegramAPI = require('node-telegram-bot-api');
