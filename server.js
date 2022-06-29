@@ -1,8 +1,10 @@
-http = require('http');
-fs = require('fs');
-telegramAPI = require('node-telegram-bot-api');
-
-func = {
+// Node object
+const http = require('http');
+const fs = require('fs');
+// Npm object
+const telegramAPI = require('node-telegram-bot-api');
+// Mine object
+const func = {
   readFileSync: function(path) {
     var encoding;
     if (path.split('.')[1] == 'html') {
@@ -27,12 +29,11 @@ func = {
 };
 
 process.env.NTBA_FIX_319 = 1;
-PORT = process.env.PORT || 5000;
-HOST = process.env.HOST;
-URL = process.env.CUSTOM_ENV_VARIABLE || 'https://astuniont.herokuapp.com/' ,
 
+const port = process.env.PORT || 5000;
+const host = process.env.HOST;
 
-server = http.createServer((request, response) => {
+const server = http.createServer((request, response) => {
   console.log(request.method, request.url);
   if (request.method == 'GET') {
     if (request.url == '/') {
@@ -55,20 +56,16 @@ server = http.createServer((request, response) => {
   } 
 });
 
-server.listen(PORT, HOST, () => {
-  console.log(`Server on ${HOST}:${PORT}`);
+server.listen(PORT, () => {
+  console.log(`Server port ${PORT}`);
 });
 
-token = '5595225109:AAF1Zr9lWFE7hCajnVqg-mhc8L530o8PwjY';
-bot = new telegramAPI(token, { polling: true });
-/*
-bot = new telegramAPI(token, { webHook: { port: PORT, host: HOST } });
-bot.setWebHook(URL + ':' + PORT + '/bot' + token);
-*/
+const token = '5595225109:AAF1Zr9lWFE7hCajnVqg-mhc8L530o8PwjY';
+const bot = new telegramAPI(token, { polling: true });
+
 bot.on('message', (message) => {
   
   // если чата нет в базе сохранить чат и данные пользователя в базе - msg.chat 
-  
   
   //bot.sendPhoto(msg.chat.id, 'url', { caption: 'text' });
   //bot.sendMessage(msg.chat.id, "Welcome", {
@@ -96,16 +93,12 @@ bot.on('message', (message) => {
       ] 
     } 
   };
-  
   bot.sendMessage(message.chat.id, `Привет, <b>${message.chat.first_name}</b>!\n<b>Спасибо что установили наш бот!</b>\nВыберите требуемую услугу и получите номер телефона специалиста:`, opts);
 });
 
 bot.on('callback_query', (query) => {
   if (query.data == 0 || query.data == 1) {
-    setTimeout(() => {
-      bot.sendContact(query.message.chat.id, '+77056355871', query.message.chat.first_name + ' ' + query.message.chat.last_name);
-    }, 1000);
-    bot.sendMessage(query.message.chat.id, 'Номер телефона специалиста:');
+    bot.sendContact(query.message.chat.id, '+77056355871', query.message.chat.first_name + ' ' + query.message.chat.last_name);
   } 
 });
 
