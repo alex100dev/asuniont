@@ -1,8 +1,6 @@
 // Node object
 const http = require('http');
 const fs = require('fs');
-// Npm object
-const telegramAPI = require('node-telegram-bot-api');
 // Mine object
 const func = {
   readFileSync: function(path) {
@@ -58,6 +56,8 @@ const server = http.createServer((request, response) => {
 
 server.listen(port, () => { console.log(`Server port ${port}`); });
 
+// TelegramBot object
+const telegramAPI = require('node-telegram-bot-api');
 const token = '5595225109:AAF1Zr9lWFE7hCajnVqg-mhc8L530o8PwjY';
 const bot = new telegramAPI(token, { polling: true });
 
