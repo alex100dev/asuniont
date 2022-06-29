@@ -4,6 +4,16 @@ const telegramAPI = require('node-telegram-bot-api');
 const token = '5595225109:AAF1Zr9lWFE7hCajnVqg-mhc8L530o8PwjY';
 const bot = new telegramAPI(token, { polling: true });
 
+const order = [
+  {
+    id: 0,
+    user_id: 1632569299, 
+    service_id: 0,
+    date: ''
+  }
+];
+
+
 bot.on('message', (message) => {
   // если чата нет в базе сохранить чат и данные пользователя в базе - msg.chat 
   
@@ -27,12 +37,20 @@ bot.on('message', (message) => {
   const opts = {
     parse_mode: 'HTML', 
     reply_markup: {
-      inline_keyboard: [
-        [ { text: 'Ремонт компьютеров и ноутбуков', callback_data: '0' }, ],
-        [ { text: 'Подключение к базе бота', callback_data: '1' }, ],
-      ] 
+      inline_keyboard: [] 
     } 
   };
+  
+  const service = [
+    {
+      id: 0,
+      name: 'Подключение к базе бота',
+      time: ''
+    }
+  ];
+  service.forEach((e, i) => {
+    console.log(e, i);
+  });
   bot.sendMessage(message.chat.id, `Привет, <b>${message.chat.first_name}</b>!\n<b>Спасибо что установили наш бот!</b>\nВыберите требуемую услугу и получите номер телефона специалиста:`, opts);
 });
 bot.on('callback_query', (query) => {
@@ -41,27 +59,17 @@ bot.on('callback_query', (query) => {
     // bot.sendContact(query.message.chat.id, '+77056355871', query.message.chat.first_name + ' ' + query.message.chat.last_name);
   } 
 });
-const users = [{
-  message_id: 121,
-  from: {
+const user = [
+  {
     id: 1632569299,
     is_bot: false,
     first_name: 'Alexandr',
     last_name: 'Astashov',
     username: 'lifecruisetothesky',
     language_code: 'ru'
-  },
-  chat: {
-    id: 1632569299,
-    first_name: 'Alexandr',
-    last_name: 'Astashov',
-    username: 'lifecruisetothesky',
-    type: 'private'
-  },
-  date: 1656475190,
-  text: '/start',
-  entities: [ { offset: 0, length: 6, type: 'bot_command' } ]
-}];
+  }
+];
+
 /* TelegramBot */ /*
 
 Kind: global class
