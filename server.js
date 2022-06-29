@@ -1,8 +1,8 @@
-const http = require('http');
-const fs = require('fs');
+http = require('http');
+fs = require('fs');
 telegramAPI = require('node-telegram-bot-api');
 
-const func = {
+func = {
   readFileSync: function(path) {
     var encoding;
     if (path.split('.')[1] == 'html') {
@@ -27,9 +27,9 @@ const func = {
 };
 
 process.env.NTBA_FIX_319 = 1;
-const PORT = process.env.PORT || 5000;
-const HOST = process.env.HOST;
-const URL = process.env.CUSTOM_ENV_VARIABLE || 'https://astuniont.herokuapp.com/' ,
+PORT = process.env.PORT || 5000;
+HOST = process.env.HOST;
+URL = process.env.CUSTOM_ENV_VARIABLE || 'https://astuniont.herokuapp.com/' ,
 
 
 server = http.createServer((request, response) => {
