@@ -41,6 +41,7 @@ bot.on('message', (message) => {
   };
   bot.sendMessage(message.chat.id, `Привет, <b>${message.chat.first_name}</b>!\n<b>Спасибо что установили наш бот!</b>\nВыберите требуемую услугу и получите номер телефона специалиста:`, opts);
 });
+/*
 bot.on('callback_query', (query) => {
   console.log(query);
   if (query.data == 0 || query.data == 1) {
