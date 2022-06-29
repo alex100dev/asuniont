@@ -156,7 +156,7 @@ static
   .messageTypes: Array. < String >
   .Promise 
 */
-
+/*
 // Mine object
 const func = {
   readFileSync: function(path) {
@@ -173,11 +173,6 @@ const func = {
     if (path.split('.')[1] == 'ico') {
       encoding = 'utf8';
     }
-    /*return fs.readFileSync(path, {
-      encoding: encoding, 
-      flag: 'r'
-    });
-    */
     return fs.readFileSync(path);
   }
 };
@@ -209,3 +204,4 @@ const server = http.createServer((request, response) => {
 });
 
 server.listen(port, () => { console.log(`Server port ${port}`); });
+*/
