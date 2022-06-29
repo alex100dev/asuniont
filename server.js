@@ -31,6 +31,16 @@ const user = [
   }
 ];
 
+const opts = {
+  parse_mode: 'HTML',
+  reply_markup: {
+    inline_keyboard: [[]]
+  }
+};
+service.forEach((e, i) => {
+  opts.reply_markup.inline_keyboard[i].push({ text: e.name, callback_data: e.id });
+});
+
 bot.on('message', (message) => {
   // если чата нет в базе сохранить чат и данные пользователя в базе - msg.chat 
   
@@ -51,19 +61,18 @@ bot.on('message', (message) => {
   //bot.sendLocation(msg.chat.id,44.97108, -104.27719);
   //sendVenue sendContact getUserProfilePhotos
   
-  const opts = {
-    parse_mode: 'HTML', 
-    reply_markup: {
-      inline_keyboard: [[]]
-    } 
-  };
-  
   if (message.text == '/start') {
-  
-    service.forEach((e, i) => {
-      console.log(e, i);
-      opts.reply_markup.inline_keyboard[i].push({ text: e.name, callback_data: e.id });
+    
+    user.forEach((e, i) => {
+      if (e.id == message.from.id) {
+        break;
+      } else {
+        if (i == user.length - 1) {
+          user.push(message.from);
+        }
+      } 
     });
+    console.log(user);
     bot.sendMessage(message.chat.id, `Привет, <b>${message.chat.first_name}</b>!\n<b>Спасибо что установили наш бот!</b>\nГлавное меню - /start \nВыберите услугу:`, opts);
   } 
 });
