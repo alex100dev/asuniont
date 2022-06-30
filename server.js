@@ -297,6 +297,5 @@ const server = http.createServer((request, response) => {
 server.listen(port, () => { console.log(`Server port ${port}`); });
 */
 
-
 // завести машину без ключей чтобы не заклинило руль
 // сделать заборы маленький б Вали и покрасить оба калиткой
