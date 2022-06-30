@@ -30,6 +30,10 @@ const service = [
         id: '03',
         name: 'Покраска волос',
         user_id: 16325692,
+      },
+      {
+        id: '00',
+        name: 'Вернуться'
       }
     ]
   },
@@ -111,6 +115,10 @@ bot.on('callback_query', (query) => {
   if (query.data == '1') {
     
   }
+  if (query.data == '00') {
+    bot.sendMessage(message.chat.id, `Привет, <b>${message.chat.first_name}</b>!\nГлавное меню - /start\nВыберите услугу:`, opts);
+  }
+    // для всех сервис айтем
   console.log(order);
 });
 
