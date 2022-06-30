@@ -92,7 +92,7 @@ bot.on('message', (message) => {
   } 
 });
 bot.on('callback_query', (query) => {
-  console.log(query.data);
+  console.log(query);
   if (query.data == '2') {
       order.push({ id: order.length, user_id: query.message.chat.id, service_id: query.data, date: new Date().toISOString() });
       for (var i in service) {
@@ -126,7 +126,7 @@ bot.on('callback_query', (query) => {
                 ]
             ]
     }, {
-      chat_id: query.message.from.id,
+      chat_id: query.from.id,
       message_id: query.message.message_id
     });
     /*
@@ -146,7 +146,7 @@ bot.on('callback_query', (query) => {
   console.log(order);
 });
 
-/*  {+1
+/*  {
     id: '7011831750756888275',
     from: {
       id: 1632569299,
