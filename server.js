@@ -116,7 +116,7 @@ bot.on('callback_query', (query) => {
     
   }
   if (query.data == '00') {
-    bot.sendMessage(query.message.chat.id, `Привет, <b>${message.chat.first_name}</b>!\nГлавное меню - /start\nВыберите услугу:`, opts);
+    bot.sendMessage(query.message.chat.id, `Привет, <b>${query.message.chat.first_name}</b>!\nГлавное меню - /start\nВыберите услугу:`, opts);
   }
     // для всех сервис айтем
   console.log(order);
