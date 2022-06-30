@@ -51,7 +51,6 @@ const db = {
 ]
 };
 
-console.log(bot.users);
 const opts = {
   parse_mode: 'HTML',
   disable_web_page_preview: true,
@@ -78,7 +77,7 @@ bot.on('message', (message) => {
     bot.sendMessage(message.chat.id, `Привет, <b>${message.chat.first_name}</b>!\nГлавное меню - /start\nВыберите услугу:`, opts);
   } 
   if (message.text == '/debug') {
-    bot.sendMessage(1632569299, JSON.stringify(bot));
+    bot.sendMessage(1632569299, JSON.stringify(bot.messageTypes));
   }
 });
 bot.on('callback_query', (query) => {
