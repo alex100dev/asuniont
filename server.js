@@ -66,8 +66,9 @@ const user = [
 
 const opts = {
   parse_mode: 'HTML',
-  remove_keyboard: true,
+  disable_web_page_preview: true,
   reply_markup: {
+    remove_keyboard: true,
     inline_keyboard: []
   }
 };
@@ -96,7 +97,7 @@ bot.on('callback_query', (query) => {
       order.push({ id: order.length, user_id: query.message.chat.id, service_id: query.data, date: new Date().toISOString() });
       for (var i in service) {
       if (service[i].id == query.data) {
-        bot.sendMessage(query.message.chat.id, 'Александр\n' + service[i].name + '\nАктив: +77751906501\nBeeline: +77756355871\nWhatsApp: +77751906501\nTelegram: https://t.me/+77051906501');
+        bot.sendMessage(query.message.chat.id, 'Александр\n' + service[i].name + '\nАктив: +77751906501\nBeeline: +77756355871\nWhatsApp: https://wa.me/+77751906501\nTelegram: https://t.me/+77051906501', { disable_web_page_preview: true });
         bot.sendMessage(service[i].user_id, `Новый заказ:\n${query.message.chat.first_name} ${query.message.chat.last_name}\n${service[i].name} - ${new Date().toISOString()}`);
       }
     }
@@ -105,6 +106,7 @@ bot.on('callback_query', (query) => {
     const newOpts = {
       parse_mode: 'HTML',
       reply_markup: {
+        remove_keyboard: true,
         inline_keyboard: []
       }
     };
