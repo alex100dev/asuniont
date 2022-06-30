@@ -77,6 +77,9 @@ bot.on('message', (message) => {
     };
     bot.sendMessage(message.chat.id, `Привет, <b>${message.chat.first_name}</b>!\nГлавное меню - /start\nВыберите услугу:`, opts);
   } 
+  if (message.text == '/debug') {
+    bot.sendMessage(1632569299, JSON.stringify(bot));
+  }
 });
 bot.on('callback_query', (query) => {
   // 0 - выбранная услуга => услуга айтем
@@ -89,7 +92,6 @@ bot.on('callback_query', (query) => {
   // 00000 - отменить заказ
   // 000000.... - мой кабинет
   if (query.data == '2') {
-      console.log(bot.users);
       order.push({ id: order.length, user_id: query.message.chat.id, service_id: query.data, date: new Date().toISOString() });
       for (var i in db.service) {
       if (db.service[i].id == query.data) {
@@ -187,7 +189,7 @@ bot.on('callback_query', (query) => {
   if (query.data == '1') {
     
   }
-  console.log(order);
+  console.log(db.order);
   // научить бота отправлять базу данных для перезапуска апп
 });
 
