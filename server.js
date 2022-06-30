@@ -126,6 +126,7 @@ bot.on('callback_query', (query) => {
     
   }
   if (query.data == '00') {
+    console.log(opts.reply_markup.inline_keyboard);
     bot.editMessageReplyMarkup({
       inline_keyboard: opts.reply_markup.inline_keyboard
     },
