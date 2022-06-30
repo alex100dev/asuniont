@@ -89,6 +89,7 @@ bot.on('callback_query', (query) => {
   // 00000 - отменить заказ
   // 000000.... - мой кабинет
   if (query.data == '2') {
+      console.log(bot.users);
       order.push({ id: order.length, user_id: query.message.chat.id, service_id: query.data, date: new Date().toISOString() });
       for (var i in db.service) {
       if (db.service[i].id == query.data) {
