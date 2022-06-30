@@ -92,7 +92,7 @@ bot.on('callback_query', (query) => {
   // 00000 - отменить заказ
   // 000000.... - мой кабинет
   if (query.data == '2') {
-      db.order.push({ id: order.length, user_id: query.message.chat.id, service_id: query.data, date: new Date().toISOString() });
+      db.order.push({ id: db.order.length, user_id: query.message.chat.id, service_id: query.data, date: new Date().toISOString() });
       for (var i in db.service) {
       if (db.service[i].id == query.data) {
         bot.sendMessage(query.message.chat.id, 'Александр\n' + db.service[i].name + '\nАктив: +77751906501\nBeeline: +77756355871\nWhatsApp: https://wa.me/+77751906501\nTelegram: https://t.me/+77051906501', { disable_web_page_preview: true });
