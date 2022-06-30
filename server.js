@@ -68,7 +68,6 @@ const opts = {
   parse_mode: 'HTML',
   disable_web_page_preview: true,
   reply_markup: {
-    remove_keyboard: true,
     inline_keyboard: []
   }
 };
@@ -106,7 +105,6 @@ bot.on('callback_query', (query) => {
     const newOpts = {
       parse_mode: 'HTML',
       reply_markup: {
-        remove_keyboard: true,
         inline_keyboard: []
       }
     };
