@@ -128,7 +128,13 @@ bot.on('callback_query', (query) => {
     
   }
   if (query.data == '00') {
-    bot.sendMessage(query.message.chat.id, `Привет, <b>${query.message.chat.first_name}</b>!\nГлавное меню - /start\nВыберите услугу:`, opts);
+    bot.editMessageReplyMarkup({
+      inline_keyboard: opts.reply_markup.inline_keyboard
+    },
+    {
+      chat_id: query.from.id,
+      message_id: query.message.message_id
+    });
   }
     // для всех сервис айтем
   console.log(order);
