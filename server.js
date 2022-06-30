@@ -110,10 +110,31 @@ bot.on('callback_query', (query) => {
         inline_keyboard: []
       }
     };
+    bot.editMessageReplyMarkup({
+      inline_keyboard: [
+                [
+          {
+            text: "text1",
+            callback_data: "data1"
+                    }
+                ],
+                [
+          {
+            text: "text2",
+            callback_data: "data2"
+                    }
+                ]
+            ]
+    }, {
+      chat_id: query.message.from.id,
+      message_id: query.message.message_id
+    });
+    /*
     for (var i in service[0].serviceItem) {
       newOpts.reply_markup.inline_keyboard.push([{ text: service[0].serviceItem[i].name, callback_data: service[0].serviceItem[i].id }]);
     }
     bot.sendMessage(query.message.chat.id, `Продолжите выбор:`, newOpts);
+    */
   }
   if (query.data == '1') {
     
