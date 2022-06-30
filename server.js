@@ -9,32 +9,18 @@ const bot = new telegramAPI(token, { webHook: { port: port, host: host } });
 //const bot = new telegramAPI(token, { polling: true });
 
 
-const order = [];
-const service = [
+const db = {
+  order: [ ],
+  service: [
   {
     id: '0',
     name: 'Очередь к парихмахеру',
     user_id: 16325692,
     serviceItem: [
-      {
-        id: '01',
-        name: 'Женская стрижка',
-        user_id: 16325692,
-      },
-      {
-        id: '02',
-        name: 'Мужская стрижка',
-        user_id: 16325692,
-      },
-      {
-        id: '03',
-        name: 'Покраска волос',
-        user_id: 16325692,
-      },
-      {
-        id: '00',
-        name: 'Вернуться'
-      }
+      { id: '01', name: 'Женская стрижка', user_id: 16325692 },
+      { id: '02', name: 'Мужская стрижка', user_id: 16325692 },
+      { id: '03', name: 'Покраска волос',  user_id: 16325692 },
+      { id: '00', name: 'Вернуться' }
     ]
   },
   {
@@ -51,8 +37,8 @@ const service = [
     user_id: 1632569299,
   } 
   
-];
-const user = [
+],
+  user: [
   {
     id: 1632569299,
     is_bot: false,
@@ -62,8 +48,10 @@ const user = [
     mobile: '+77751906501',
     language_code: 'ru'
   }
-];
+]
+};
 
+console.log(bot.users);
 const opts = {
   parse_mode: 'HTML',
   disable_web_page_preview: true,
@@ -71,19 +59,19 @@ const opts = {
     inline_keyboard: []
   }
 };
-for (var i in service) {
-  opts.reply_markup.inline_keyboard.push([{ text: service[i].name, callback_data: service[i].id }]);
+for (var i in db.service) {
+  opts.reply_markup.inline_keyboard.push([{ text: db.service[i].name, callback_data: db.service[i].id }]);
 }
 bot.setWebHook('https://astuniont.herokuapp.com/' + token);
 bot.on('message', (message) => {
   if (message.text == '/start') {
-    for (var i in user) {
-      if (user[i].id == message.from.id) {
+    for (var i in db.user) {
+      if (db.user[i].id == message.from.id) {
         break;
       } 
       else {
         if (i == user.length - 1) {
-          user.push(message.from);
+          db.user.push(message.from);
         }
       } 
     };
@@ -91,13 +79,21 @@ bot.on('message', (message) => {
   } 
 });
 bot.on('callback_query', (query) => {
-  console.log(query);
+  // 0 - выбранная услуга => услуга айтем
+  // 00 - выбранная услуга <= услуга айтем
+  // 01 - услуга айтем => календарь
+  // 000 - услуга айтем <= календарь
+  // 001 - календарь => подтверждение
+  // 0000 - календарь <= подтверждение
+  // 0001 - заказ подтвержден
+  // 00000 - отменить заказ
+  // 000000.... - мой кабинет
   if (query.data == '2') {
       order.push({ id: order.length, user_id: query.message.chat.id, service_id: query.data, date: new Date().toISOString() });
-      for (var i in service) {
-      if (service[i].id == query.data) {
-        bot.sendMessage(query.message.chat.id, 'Александр\n' + service[i].name + '\nАктив: +77751906501\nBeeline: +77756355871\nWhatsApp: https://wa.me/+77751906501\nTelegram: https://t.me/+77051906501', { disable_web_page_preview: true });
-        bot.sendMessage(service[i].user_id, `Новый заказ:\n${query.message.chat.first_name} ${query.message.chat.last_name}\n${service[i].name} - ${new Date().toISOString()}`);
+      for (var i in db.service) {
+      if (db.service[i].id == query.data) {
+        bot.sendMessage(query.message.chat.id, 'Александр\n' + db.service[i].name + '\nАктив: +77751906501\nBeeline: +77756355871\nWhatsApp: https://wa.me/+77751906501\nTelegram: https://t.me/+77051906501', { disable_web_page_preview: true });
+        bot.sendMessage(db.service[i].user_id, `Новый заказ:\n${query.message.chat.first_name} ${query.message.chat.last_name}\n${db.service[i].name} - ${new Date().toISOString()}`);
       }
     }
   }
@@ -108,8 +104,8 @@ bot.on('callback_query', (query) => {
         inline_keyboard: []
       }
     };
-    for (var i in service[0].serviceItem) {
-      newOpts.reply_markup.inline_keyboard.push([{ text: service[0].serviceItem[i].name, callback_data: service[0].serviceItem[i].id }]);
+    for (var i in db.service[0].serviceItem) {
+      newOpts.reply_markup.inline_keyboard.push([{ text: db.service[0].serviceItem[i].name, callback_data: db.service[0].serviceItem[i].id }]);
     }
     bot.editMessageReplyMarkup({
       inline_keyboard: newOpts.reply_markup.inline_keyboard 
@@ -122,9 +118,6 @@ bot.on('callback_query', (query) => {
     bot.sendMessage(query.message.chat.id, `Продолжите выбор:`, newOpts);
     */
   }
-  if (query.data == '1') {
-    
-  }
   if (query.data == '00') {
     const newOpts = {
       parse_mode: 'HTML',
@@ -133,10 +126,9 @@ bot.on('callback_query', (query) => {
         inline_keyboard: []
       }
     };
-    for (var i in service) {
-      newOpts.reply_markup.inline_keyboard.push([{ text: service[i].name, callback_data: service[i].id }]);
+    for (var i in db.service) {
+      newOpts.reply_markup.inline_keyboard.push([{ text: db.service[i].name, callback_data: db.service[i].id }]);
     }
-    console.log(newOpts.reply_markup.inline_keyboard);
     bot.editMessageReplyMarkup({
       inline_keyboard: newOpts.reply_markup.inline_keyboard
     },
@@ -145,8 +137,57 @@ bot.on('callback_query', (query) => {
       message_id: query.message.message_id
     });
   }
-    // для всех сервис айтем
+  if (query.data == '01') {
+    // Переписываю активный заказ на новый у канкретного пользователя
+    // Отправляю сообщение о том что нужно указать дату
+    // цикл по массиву свободных дат + генератор свободных дат на новые дни каждые 6 часов проверить условие
+    // отправляю календарь для оформления пользователем
+    // проверить есть ли у пользователя телефон
+    // беру номер для окончательного подтверждения
+    // привязать номер за пользователем
+  }
+  if (query.data == '000') {
+    const newOpts = {
+      parse_mode: 'HTML',
+      reply_markup: {
+        inline_keyboard: []
+      }
+    };
+    for (var i in db.service[0].serviceItem) {
+      newOpts.reply_markup.inline_keyboard.push([{ text: db.service[0].serviceItem[i].name, callback_data: db.service[0].serviceItem[i].id }]);
+    }
+    bot.editMessageReplyMarkup({
+      inline_keyboard: newOpts.reply_markup.inline_keyboard
+    },
+    {
+      chat_id: query.from.id,
+      message_id: query.message.message_id
+    });
+  }
+  if (query.data == '001') {
+    const newOpts = {
+      parse_mode: 'HTML',
+      reply_markup: {
+        inline_keyboard: []
+      }
+    };
+    for (var i in db.service[0].serviceItem) {
+      newOpts.reply_markup.inline_keyboard.push([{ text: db.service[0].serviceItem[i].name, callback_data: db.service[0].serviceItem[i].id }]);
+    }
+    bot.editMessageReplyMarkup({
+      inline_keyboard: newOpts.reply_markup.inline_keyboard
+    },
+    {
+      chat_id: query.from.id,
+      message_id: query.message.message_id
+    });
+  }
+  
+  if (query.data == '1') {
+    
+  }
   console.log(order);
+  // научить бота отправлять базу данных для перезапуска апп
 });
 
 /*  {
