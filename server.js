@@ -66,6 +66,7 @@ const user = [
 
 const opts = {
   parse_mode: 'HTML',
+  remove_keyboard: true,
   reply_markup: {
     inline_keyboard: []
   }
