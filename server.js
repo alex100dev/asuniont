@@ -126,9 +126,19 @@ bot.on('callback_query', (query) => {
     
   }
   if (query.data == '00') {
-    console.log(opts.reply_markup.inline_keyboard);
+    const newOpts = {
+      parse_mode: 'HTML',
+      disable_web_page_preview: true,
+      reply_markup: {
+        inline_keyboard: []
+      }
+    };
+    for (var i in service) {
+      newOpts.reply_markup.inline_keyboard.push([{ text: service[i].name, callback_data: service[i].id }]);
+    }
+    console.log(newOpts.reply_markup.inline_keyboard);
     bot.editMessageReplyMarkup({
-      inline_keyboard: opts.reply_markup.inline_keyboard
+      inline_keyboard: newOpts.reply_markup.inline_keyboard
     },
     {
       chat_id: query.from.id,
