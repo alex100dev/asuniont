@@ -64,7 +64,7 @@ const db = {
   }
 ]
 };
-db.service.dateItem();
+db.service[0].dateItem();
 // bot.setMyCommands(commands, [options])
 const opts = {
   parse_mode: 'HTML',
