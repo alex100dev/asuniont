@@ -1,8 +1,8 @@
 process.env.NTBA_FIX_319 = 1;
 
-const now = function() {
+const now = function(hours) {
   var date = new Date();
-  var now = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()} ${date.getHours() + 6}:${date.getMinutes()}`;
+  var now = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()} ${date.getHours() + 6 + hours}:${date.getMinutes()}`;
   return now;
 }
 const port = process.env.PORT;
@@ -27,16 +27,16 @@ const db = {
       { id: '00', name: 'Вернуться' }
     ],
     dateItem: function() {
-      var today = new Date();
-      var tomorrow = new Date(today.getTime() + (24 * 60 * 60 * 1000));
-      var afterTomorrow = new Date(tomorrow.getTime() + (24 * 60 * 60 * 1000));
-      console.log('now');
-      console.log(today.getDay());
-      console.log(tomorrow.getDay());
-      console.log(afterTomorrow.getDay());
+      var today = now(0);
+      var tomorrow = now(24);
+      var afterTomorrow = now(48);
+      
+      console.log(today);
+      console.log(tomorrow);
+      console.log(afterTomorrow);
     },
     hoursItem: function() {
-      
+  
     }
   },
   {
@@ -107,11 +107,11 @@ bot.on('callback_query', (query) => {
   // 00000 - отменить заказ
   // 000000.... - мой кабинет
   if (query.data == '2') {
-      db.order.push({ id: db.order.length, user_id: query.message.chat.id, service_id: query.data, date: now() });
+      db.order.push({ id: db.order.length, user_id: query.message.chat.id, service_id: query.data, date: now(0) });
       for (var i in db.service) {
       if (db.service[i].id == query.data) {
         bot.sendMessage(query.message.chat.id, 'Александр\n' + db.service[i].name + '\nАктив: +77751906501\nBeeline: +77756355871\nWhatsApp: https://wa.me/+77751906501\nTelegram: https://t.me/+77051906501', { disable_web_page_preview: true });
-        bot.sendMessage(db.service[i].user_id, `Новый заказ:\n${query.message.chat.first_name} ${query.message.chat.last_name}\nИмя - ${db.service[i].name}\nДата - ${now()}`);
+        bot.sendMessage(db.service[i].user_id, `Новый заказ:\n${query.message.chat.first_name} ${query.message.chat.last_name}\nИмя - ${db.service[i].name}\nДата - ${now(0)}`);
       }
     }
   }
@@ -184,7 +184,6 @@ bot.on('callback_query', (query) => {
     });
   }
   if (query.data == '001') {
-    console.log(now.getDate());
     const newOpts = {
       parse_mode: 'HTML',
       reply_markup: {
