@@ -29,7 +29,8 @@ const db = {
     dateItem: function() {
       var today = new Date();
       var tomorrow = new Date(today.getTime() + (24 * 60 * 60 * 1000));
-      var afterTomorrow = new Date(today.getTime() + (48 * 60 * 60 * 1000));
+      var afterTomorrow = new Date(tomorrow.getTime() + (24 * 60 * 60 * 1000));
+      console.log('now');
       console.log(today.getDay());
       console.log(tomorrow.getDay());
       console.log(afterTomorrow.getDay());
