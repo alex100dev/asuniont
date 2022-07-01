@@ -27,7 +27,13 @@ const db = {
       { id: '02', name: 'Мужская стрижка', user_id: 16325692 },
       { id: '03', name: 'Покраска волос',  user_id: 16325692 },
       { id: '00', name: 'Вернуться' }
-    ]
+    ],
+    dateItem: function() {
+      
+    },
+    hoursItem: function() {
+      
+    }
   },
   {
     id: '1',
@@ -101,7 +107,7 @@ bot.on('callback_query', (query) => {
       for (var i in db.service) {
       if (db.service[i].id == query.data) {
         bot.sendMessage(query.message.chat.id, 'Александр\n' + db.service[i].name + '\nАктив: +77751906501\nBeeline: +77756355871\nWhatsApp: https://wa.me/+77751906501\nTelegram: https://t.me/+77051906501', { disable_web_page_preview: true });
-        bot.sendMessage(db.service[i].user_id, `Новый заказ:\n${query.message.chat.first_name} ${query.message.chat.last_name}\n${db.service[i].name} - ${now()}`);
+        bot.sendMessage(db.service[i].user_id, `Новый заказ:\n${query.message.chat.first_name} ${query.message.chat.last_name}\nИмя - ${db.service[i].name}\nДата - ${now()}`);
       }
     }
   }
