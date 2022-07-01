@@ -2,8 +2,7 @@ process.env.NTBA_FIX_319 = 1;
 
 const now = function() {
   var date = new Date();
-  var now = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()} ${date.getHours() + 6}:${date.getMinutes()}`;
-  
+  var now = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()} ${date.getHours() + 6}:${date.getMinutes()}`;
   return now;
 }
 const port = process.env.PORT;
@@ -13,7 +12,6 @@ const telegramAPI = require('node-telegram-bot-api');
 const token = '5595225109:AAF1Zr9lWFE7hCajnVqg-mhc8L530o8PwjY';
 const bot = new telegramAPI(token, { webHook: { port: port, host: host } });
 //const bot = new telegramAPI(token, { polling: true });
-
 
 const db = {
   order: [ ],
@@ -29,7 +27,12 @@ const db = {
       { id: '00', name: 'Вернуться' }
     ],
     dateItem: function() {
-      
+      var today = new Date();
+      var tomorrow = new Date(today.getTime() + (24 * 60 * 60 * 1000));
+      var afterTomorrow = new Date(today.getTime() + (48 * 60 * 60 * 1000));
+      console.log(today.getDay());
+      console.log(tomorrow.getDay());
+      console.log(afterTomorrow.getDay());
     },
     hoursItem: function() {
       
@@ -48,7 +51,6 @@ const db = {
     name: 'Подключение к базе бота',
     user_id: 1632569299,
   } 
-  
 ],
   user: [
   {
@@ -62,6 +64,7 @@ const db = {
   }
 ]
 };
+db.service.dateItem();
 // bot.setMyCommands(commands, [options])
 const opts = {
   parse_mode: 'HTML',
@@ -86,7 +89,7 @@ bot.on('message', (message) => {
         }
       } 
     };
-    bot.sendMessage(message.chat.id, `Привет, <b>${message.chat.first_name}</b>!\nГлавное меню - /start\nВыберите услугу:`, opts);
+    bot.sendMessage(message.chat.id, `Привет, <b>${message.chat.first_name}</b>!\nГлавное меню - /start\nВыберите услугу (дополнительно: укажите дату, время и подтвердите номером телефона):`, opts);
   } 
   if (message.text == '/debug') {
     //bot.sendMessage(1632569299, JSON.stringify(bot.messageTypes));
@@ -154,6 +157,7 @@ bot.on('callback_query', (query) => {
   if (query.data == '01') {
     // Переписываю активный заказ на новый у канкретного пользователя
     // Отправляю сообщение о том что нужно указать дату
+    
     // цикл по массиву свободных дат + генератор свободных дат на новые дни каждые 6 часов проверить условие
     // отправляю календарь для оформления пользователем
     // проверить есть ли у пользователя телефон
