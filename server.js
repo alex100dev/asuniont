@@ -1,16 +1,18 @@
 process.env.NTBA_FIX_319 = 1;
 
 const now = function() {
-  return new Date().toISOString();
+  var date = new Date();
+  var now = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()} ${date.getHours() + 6}:${date.getMinutes()}`;
+  
+  return now;
 }
 const port = process.env.PORT;
 const host = process.env.HOST;
 const fs = require('fs');
-const date = new Date();
 const telegramAPI = require('node-telegram-bot-api');
 const token = '5595225109:AAF1Zr9lWFE7hCajnVqg-mhc8L530o8PwjY';
-//const bot = new telegramAPI(token, { webHook: { port: port, host: host } });
-const bot = new telegramAPI(token, { polling: true });
+const bot = new telegramAPI(token, { webHook: { port: port, host: host } });
+//const bot = new telegramAPI(token, { polling: true });
 
 
 const db = {
@@ -65,7 +67,7 @@ const opts = {
 for (var i in db.service) {
   opts.reply_markup.inline_keyboard.push([{ text: db.service[i].name, callback_data: db.service[i].id }]);
 }
-//bot.setWebHook('https://astuniont.herokuapp.com/' + token);
+bot.setWebHook('https://astuniont.herokuapp.com/' + token);
 bot.on('message', (message) => {
   if (message.text == '/start') {
     for (var i in db.user) {
