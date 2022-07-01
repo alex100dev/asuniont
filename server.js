@@ -1,12 +1,16 @@
 process.env.NTBA_FIX_319 = 1;
+
+const now = function() {
+  return new Date().toISOString();
+}
 const port = process.env.PORT;
 const host = process.env.HOST;
 const fs = require('fs');
 const date = new Date();
 const telegramAPI = require('node-telegram-bot-api');
 const token = '5595225109:AAF1Zr9lWFE7hCajnVqg-mhc8L530o8PwjY';
-const bot = new telegramAPI(token, { webHook: { port: port, host: host } });
-//const bot = new telegramAPI(token, { polling: true });
+//const bot = new telegramAPI(token, { webHook: { port: port, host: host } });
+const bot = new telegramAPI(token, { polling: true });
 
 
 const db = {
@@ -50,7 +54,7 @@ const db = {
   }
 ]
 };
-
+// bot.setMyCommands(commands, [options])
 const opts = {
   parse_mode: 'HTML',
   disable_web_page_preview: true,
@@ -61,7 +65,7 @@ const opts = {
 for (var i in db.service) {
   opts.reply_markup.inline_keyboard.push([{ text: db.service[i].name, callback_data: db.service[i].id }]);
 }
-bot.setWebHook('https://astuniont.herokuapp.com/' + token);
+//bot.setWebHook('https://astuniont.herokuapp.com/' + token);
 bot.on('message', (message) => {
   if (message.text == '/start') {
     for (var i in db.user) {
@@ -77,7 +81,7 @@ bot.on('message', (message) => {
     bot.sendMessage(message.chat.id, `Привет, <b>${message.chat.first_name}</b>!\nГлавное меню - /start\nВыберите услугу:`, opts);
   } 
   if (message.text == '/debug') {
-    bot.sendMessage(1632569299, JSON.stringify(bot.messageTypes));
+    //bot.sendMessage(1632569299, JSON.stringify(bot.messageTypes));
   }
 });
 bot.on('callback_query', (query) => {
@@ -91,7 +95,7 @@ bot.on('callback_query', (query) => {
   // 00000 - отменить заказ
   // 000000.... - мой кабинет
   if (query.data == '2') {
-      db.order.push({ id: db.order.length, user_id: query.message.chat.id, service_id: query.data, date: new Date().toISOString() });
+      db.order.push({ id: db.order.length, user_id: query.message.chat.id, service_id: query.data, date: now() });
       for (var i in db.service) {
       if (db.service[i].id == query.data) {
         bot.sendMessage(query.message.chat.id, 'Александр\n' + db.service[i].name + '\nАктив: +77751906501\nBeeline: +77756355871\nWhatsApp: https://wa.me/+77751906501\nTelegram: https://t.me/+77051906501', { disable_web_page_preview: true });
@@ -167,6 +171,7 @@ bot.on('callback_query', (query) => {
     });
   }
   if (query.data == '001') {
+    console.log(now.getDate());
     const newOpts = {
       parse_mode: 'HTML',
       reply_markup: {
@@ -176,6 +181,7 @@ bot.on('callback_query', (query) => {
     for (var i in db.service[0].serviceItem) {
       newOpts.reply_markup.inline_keyboard.push([{ text: db.service[0].serviceItem[i].name, callback_data: db.service[0].serviceItem[i].id }]);
     }
+    
     bot.editMessageReplyMarkup({
       inline_keyboard: newOpts.reply_markup.inline_keyboard
     },
